@@ -41,9 +41,15 @@ public class Main {
         g2d2.dispose();
         int[][] x = convertTo2DUsingGetRGB(blackWhite1);
         int[][] y = convertTo2DUsingGetRGB(blackWhite2);
+        for(int i = 0; i < x.length; i++){
+        	for(int j = 0; j < x[0].length; j++){
+        		System.out.print(x[i][j]+" ");
+        	}
+        	System.out.println("");
+        }
         Calcs c = new Calcs();
-        double val1 = c.quintomomento(x, x);
-        double val2 = c.quintomomento(x, y);
+        double val1 = c.firstmoment( x);
+        double val2 = c.firstmoment( y);
         System.out.println(val1);
         System.out.println(val2);
         System.out.println(Math.abs((val1-val2)/val1)*100+"%");
