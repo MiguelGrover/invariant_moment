@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 import Bean.Position;
+import calc.ArrayToChar;
 import calc.Calcs;
 
 public class PicIdentifier {
@@ -75,7 +76,26 @@ public class PicIdentifier {
 		}
         
         Calcs c = new Calcs();
-        double val1 = c.firstmoment( placa);
+        ArrayList<int[][]> letters = getMatrixFromMatrix(positions, placa);
+        //Si el momento no queda proximo a alguno es un guion o basura.
+        
+        StringBuilder text = new StringBuilder();
+        for(int x = 0; x < letters.size(); x++){
+        	double val1 = c.firstmoment(letters.get(x));
+        	double val2 = c.secondmoment(letters.get(x));
+        	double val3 = c.thirdmoment(letters.get(x));
+        	double val4 = c.fourthmoment(letters.get(x));
+        	double val5 = c.fifthmoment(letters.get(x));
+        	char letra = ArrayToChar.converter(val5, 4);
+        	System.out.println("Letra "+letra+":");
+        	System.out.println(val1);
+        	System.out.println(val2);
+        	System.out.println(val3);
+        	System.out.println(val4);
+        	System.out.println(val5);
+        	text.append(letra);
+        }
+        System.out.println(text.toString());
         
 	}
 	
@@ -92,5 +112,19 @@ public class PicIdentifier {
 
 	      return result;
 	   }
-
+	private static ArrayList<int[][]> getMatrixFromMatrix(ArrayList<Position> positions, int[][] matrix){
+		ArrayList<int[][]> array = new ArrayList<int[][]>();
+		for(int letters = 0; letters < positions.size(); letters++){
+			int width = positions.get(letters).getEnd()-positions.get(letters).getInit();
+			int[][] letterMatrix = new int[matrix.length][width];
+			for(int i = 0; i < letterMatrix.length; i++){
+				for(int j = 0; j < letterMatrix[0].length; j++){
+					letterMatrix[i][j] = matrix[i][j+positions.get(letters).getInit()];
+				}
+			}
+			array.add(letterMatrix);
+		}
+		return array;
+	}
+	
 }
