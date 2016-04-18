@@ -86,7 +86,7 @@ public class PicIdentifier {
         	double val3 = c.thirdmoment(letters.get(x));
         	double val4 = c.fourthmoment(letters.get(x));
         	double val5 = c.fifthmoment(letters.get(x));
-        	char letra = ArrayToChar.converter(val5, 4);
+        	char letra = ArrayToChar.converter(val2, 1);
         	System.out.println("Letra "+letra+":");
         	System.out.println(val1);
         	System.out.println(val2);
